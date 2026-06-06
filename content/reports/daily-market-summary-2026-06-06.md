@@ -1,119 +1,61 @@
 ---
-title: "Daily Market Summary - June 6, 2026"
+title: "Daily Market Summary - 2026-06-06"
 type: "daily"
 date: "2026-06-06"
-summary: "ASPI gains 45 points to close at 11,245.67. Banking stocks lead gains. Foreign investors net buyers for 3rd consecutive session."
+summary: "ASPI gains 45.23 points. 5 gainers, 4 losers."
 ---
 
-# Daily Market Summary - June 6, 2026
+# Daily Market Summary - Saturday, 2026-06-06
 
 ## Market Overview
 
-The Colombo Stock Exchange witnessed a positive trading session on June 6, 2026, with the All Share Price Index (ASPI) gaining **45.23 points (0.40%)** to close at **11,245.67**. The S&P SL20 index declined marginally by 12.45 points (-0.36%) to settle at 3,456.89.
+### Index Performance
 
-### Key Statistics
+- **ASPI**: 11245.67 (+45.23, +0.40%)
+- **S&P SL20**: 3456.89 (-12.45, -0.36%)
 
-| Indicator | Value | Change |
-|-----------|-------|--------|
-| ASPI | 11,245.67 | +45.23 (+0.40%) |
-| S&P SL20 | 3,456.89 | -12.45 (-0.36%) |
-| Total Turnover | LKR 2.5 Bn | +15% |
-| Foreign Purchases | LKR 450 Mn | +8% |
-| Foreign Sales | LKR 325 Mn | -5% |
-| Net Foreign Flow | +LKR 125 Mn | +25% |
-| Total Trades | 12,450 | +3% |
-| Advancing | 85 | - |
-| Declining | 62 | - |
-| Unchanged | 28 | - |
+### Top Gainers
 
-## Sector Performance
+| Symbol | Company | Price | Change | % Change |
+|--------|---------|-------|--------|----------|
+| ACL.N0000 | Aitken Spence | 42.00 | +1.20 | +2.94% |
+| CARS.N0000 | Carson Cumberbatch | 32.50 | +0.80 | +2.52% |
+| DIAL.N0000 | Dialog Axiata | 12.80 | +0.30 | +2.40% |
+| NEST.N0000 | Nestle Lanka | 1250.00 | +25.00 | +2.04% |
+| HNB.N0000 | Hatton National Bank | 145.00 | +2.75 | +1.93% |
 
-| Sector | Change (%) | Turnover (LKR Mn) |
-|--------|------------|-------------------|
-| Banking | +1.45% | 850 |
-| Telecommunication | +2.15% | 420 |
-| Consumer | +0.85% | 380 |
-| Conglomerate | +1.20% | 310 |
-| Finance | -1.95% | 290 |
-| Plantations | +0.55% | 95 |
-| Manufacturing | +0.30% | 155 |
+### Top Losers
 
-## Top Gainers
+| Symbol | Company | Price | Change | % Change |
+|--------|---------|-------|--------|----------|
+| LOFC.N0000 | LOLC Finance | 5.20 | -0.15 | -2.80% |
+| COMB.N0000 | Commercial Bank | 78.25 | -1.50 | -1.88% |
+| BUKI.N0000 | Bukit Darah | 28.75 | -0.50 | -1.71% |
+| CTC.N0000 | Ceylon Tobacco | 890.00 | -15.00 | -1.66% |
 
-| Symbol | Company | Close | Change | % Change | Volume |
-|--------|---------|-------|--------|----------|--------|
-| ACL.N0000 | Aitken Spence | 42.00 | +1.20 | +2.94% | 580,000 |
-| CARS.N0000 | Carson Cumberbatch | 32.50 | +0.80 | +2.52% | 420,000 |
-| DIAL.N0000 | Dialog Axiata | 12.80 | +0.30 | +2.40% | 5,200,000 |
-| NEST.N0000 | Nestle Lanka | 1,250.00 | +25.00 | +2.04% | 85,000 |
-| JKH.N0000 | John Keells Holdings | 185.50 | +3.50 | +1.92% | 2,500,000 |
+### Economic Highlights
 
-## Top Losers
+- **Inflation Rate (YoY)**: 3.2% (-11.1%)
+- **Policy Interest Rate**: 8.25% (-2.9%)
+- **GDP Growth (QoQ)**: 1.8% (+20.0%)
 
-| Symbol | Company | Close | Change | % Change | Volume |
-|--------|---------|-------|--------|----------|--------|
-| LOFC.N0000 | LOLC Finance | 5.20 | -0.15 | -2.80% | 8,500,000 |
-| COMB.N0000 | Commercial Bank | 78.25 | -1.50 | -1.88% | 1,800,000 |
-| CTC.N0000 | Ceylon Tobacco | 890.00 | -15.00 | -1.66% | 120,000 |
-| BUKI.N0000 | Bukit Darah | 28.75 | -0.50 | -1.71% | 310,000 |
-| SAMP.N0000 | Sampath Bank | 42.50 | -0.65 | -1.51% | 520,000 |
+### Today's Key News
 
-## Market Commentary
+- [ECONOMY] Foreigners sell over US$15mn worth Sri Lanka bonds despite rate hike
+- [ECONOMIC] Economic Update: Inflation Eases to 3.2% in May 2026
 
-**Dr. Nimal Perera, Chief Economist:**
-> "Today's session reflects improving investor confidence in the banking sector. The sustained foreign buying interest is particularly encouraging, suggesting that international investors are recognizing the value opportunity in Sri Lankan equities."
+## Market Outlook
 
-**Ms. Priyanka Fernando, Senior Analyst:**
-> "The divergence between ASPI and S&P SL20 indicates selective buying in mid-cap and small-cap stocks. We expect this trend to continue as investors hunt for value beyond the large-cap names."
+Based on today's trading activity and economic data, market sentiment remains 
+positive. 
 
-## Economic Calendar
-
-| Date | Event | Expected | Previous |
-|------|-------|----------|----------|
-| Jun 10 | IMF Mission Arrival | - | - |
-| Jun 12 | Trade Balance (May) | -USD 480 Mn | -USD 520 Mn |
-| Jun 15 | Inflation (May) | 3.2% | 3.6% |
-| Jun 20 | CBSL Policy Decision | Hold at 8.25% | 8.25% |
-| Jun 25 | Tourist Arrivals (May) | 210,000 | 215,000 |
-
-## Technical Analysis
-
-**ASPI:**
-- Resistance: 11,300 (psychological) / 11,450 (200-day MA)
-- Support: 11,150 / 11,000 (50-day MA)
-- RSI: 58 (neutral)
-- MACD: Bullish crossover
-
-**S&P SL20:**
-- Resistance: 3,500 / 3,550
-- Support: 3,400 / 3,350
-- RSI: 52 (neutral)
-- MACD: Flat
-
-## Foreign Activity
-
-| Category | Value (LKR Mn) | Change |
-|----------|----------------|--------|
-| Foreign Purchases | 450 | +8% |
-| Foreign Sales | 325 | -5% |
-| Net Foreign Flow | +125 | +25% |
-
-**Top foreign buys:**
-1. JKH.N0000 - LKR 45 Mn
-2. COMB.N0000 - LKR 38 Mn
-3. HNB.N0000 - LKR 32 Mn
-
-**Top foreign sells:**
-1. CTC.N0000 - LKR 28 Mn
-2. NEST.N0000 - LKR 22 Mn
-3. DIAL.N0000 - LKR 18 Mn
-
-## Conclusion
-
-The market demonstrated resilience with selective buying across sectors. Banking stocks remain the focal point for investors ahead of the quarterly earnings season. The sustained foreign buying interest and stable macroeconomic environment provide a supportive backdrop for equities.
-
-**Outlook:** Cautiously optimistic. Key events to watch include the IMF review, quarterly earnings, and any policy announcements from the CBSL.
+Key factors to watch:
+- Inflation Rate (YoY) trends
+- Foreign investor activity
+- Upcoming corporate earnings
+- Global market conditions
 
 ---
 
-*Report generated by Lanka Market Pulse AI on June 6, 2026. This report is for informational purposes only and does not constitute investment advice.*
+*Report generated by Lanka Market Pulse on 6/6/2026, 5:19:28 PM*  
+*This report is for informational purposes only. Not investment advice.*

@@ -25,7 +25,7 @@
       "value": 1.8,
       "unit": "%",
       "change": 0.3,
-      "changePercent": 20.0,
+      "changePercent": 20,
       "period": "Q1 2026",
       "previousValue": 1.5,
       "source": "DCS"
@@ -51,5 +51,17 @@
       "source": "CBSL"
     }
   ],
-  "lastUpdated": "2026-06-06T08:30:00Z"
+  "lastUpdated": "2026-06-06T11:49:14.975Z",
+  "inflation": {
+    "current": 3.2,
+    "previous": 3.6,
+    "period": "May 2026",
+    "source": "CBSL"
+  },
+  "policyRate": {
+    "current": 8.25,
+    "previous": 8.25,
+    "period": "Jun 2026",
+    "source": "CBSL"
+  }
 }

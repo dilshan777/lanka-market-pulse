@@ -1,23 +1,20 @@
 {
   "date": "2026-06-06",
-  "summary": "Sri Lankan markets showed resilience today with the ASPI gaining 45.23 points (0.40%) to close at 11,245.67. Banking stocks led the rally with HNB and JKH posting strong gains. The S&P SL20 declined marginally by 0.36%.",
-  "marketSummary": "The Colombo Stock Exchange witnessed mixed trading with the All Share Price Index (ASPI) closing in positive territory while the S&P SL20 showed slight weakness. Total market turnover reached LKR 2.5 billion with foreign investors net buying LKR 125 million worth of equities.",
+  "summary": "ASPI gained 45.23 points today.",
+  "marketSummary": "See full report for details.",
   "keyHighlights": [
-    "ASPI gains 45.23 points to close at 11,245.67",
-    "Banking sector leads gains with HNB up 1.93%",
-    "Foreign investors net buyers for 3rd consecutive session",
-    "Dialog Axiata rises 2.40% on 5G expansion news",
-    "CBSL maintains policy rates at 8.25%",
-    "Inflation eases to 3.2% in May 2026"
+    "Foreigners sell over US$15mn worth Sri Lanka bonds despite rate hike",
+    "Economic Update: Inflation Eases to 3.2% in May 2026"
   ],
   "topGainers": [
     {
       "symbol": "ACL.N0000",
       "name": "Aitken Spence",
-      "price": 42.0,
+      "price": 42,
       "change": 1.2,
       "changePercent": 2.94,
       "volume": 580000,
+      "marketCap": 16800000000,
       "sector": "Conglomerate"
     },
     {
@@ -27,6 +24,7 @@
       "change": 0.8,
       "changePercent": 2.52,
       "volume": 420000,
+      "marketCap": 7800000000,
       "sector": "Conglomerate"
     },
     {
@@ -36,7 +34,28 @@
       "change": 0.3,
       "changePercent": 2.4,
       "volume": 5200000,
+      "marketCap": 105000000000,
       "sector": "Telecommunication"
+    },
+    {
+      "symbol": "NEST.N0000",
+      "name": "Nestle Lanka",
+      "price": 1250,
+      "change": 25,
+      "changePercent": 2.04,
+      "volume": 85000,
+      "marketCap": 60000000000,
+      "sector": "Consumer"
+    },
+    {
+      "symbol": "HNB.N0000",
+      "name": "Hatton National Bank",
+      "price": 145,
+      "change": 2.75,
+      "changePercent": 1.93,
+      "volume": 950000,
+      "marketCap": 62000000000,
+      "sector": "Banking"
     }
   ],
   "topLosers": [
@@ -47,6 +66,7 @@
       "change": -0.15,
       "changePercent": -2.8,
       "volume": 8500000,
+      "marketCap": 28000000000,
       "sector": "Finance"
     },
     {
@@ -56,23 +76,35 @@
       "change": -1.5,
       "changePercent": -1.88,
       "volume": 1800000,
+      "marketCap": 89000000000,
       "sector": "Banking"
+    },
+    {
+      "symbol": "BUKI.N0000",
+      "name": "Bukit Darah",
+      "price": 28.75,
+      "change": -0.5,
+      "changePercent": -1.71,
+      "volume": 310000,
+      "marketCap": 5200000000,
+      "sector": "Investment"
     },
     {
       "symbol": "CTC.N0000",
       "name": "Ceylon Tobacco",
-      "price": 890.0,
-      "change": -15.0,
+      "price": 890,
+      "change": -15,
       "changePercent": -1.66,
       "volume": 120000,
+      "marketCap": 167000000000,
       "sector": "Consumer"
     }
   ],
   "economicUpdates": [
-    "Central Bank maintains policy rates at 8.25% citing stable inflation",
-    "May inflation drops to 3.2% from 3.6% in April",
-    "Foreign reserves increase to USD 5.8 billion",
-    "IMF review scheduled for next week"
+    "Inflation Rate (YoY): 3.2%",
+    "Policy Interest Rate: 8.25%",
+    "GDP Growth (QoQ): 1.8%",
+    "Unemployment Rate: 4.1%"
   ],
-  "outlook": "Market sentiment remains cautiously optimistic with banking and telecom sectors expected to continue their upward momentum. Investors should watch for the upcoming IMF review and quarterly earnings season starting next week."
+  "outlook": "See full report for market outlook."
 }
