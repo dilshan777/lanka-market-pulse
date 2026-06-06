@@ -1,0 +1,22 @@
+[
+  {
+    "index": "ASPI",
+    "value": 11245.67,
+    "change": 45.23,
+    "changePercent": 0.4,
+    "volume": 125000000,
+    "high": 11280.5,
+    "low": 11190.3,
+    "timestamp": "2026-06-06T08:30:00Z"
+  },
+  {
+    "index": "S&P SL20",
+    "value": 3456.89,
+    "change": -12.45,
+    "changePercent": -0.36,
+    "volume": 45000000,
+    "high": 3480.2,
+    "low": 3430.1,
+    "timestamp": "2026-06-06T08:30:00Z"
+  }
+]

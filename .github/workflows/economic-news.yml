@@ -1,0 +1,57 @@
+name: Fetch Economic News & Data
+
+on:
+  schedule:
+    # Run every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    inputs:
+      manual_trigger:
+        description: 'Manually trigger economic news fetch'
+        required: false
+        default: 'true'
+
+jobs:
+  fetch-economic-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch economic news and data
+        run: node scripts/fetchEconomicNews.js
+        env:
+          NODE_ENV: production
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet HEAD -- content/; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push updates
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add content/
+          git commit -m "[AUTO] Economic news & data update - $(date +'%Y-%m-%d %H:%M')"
+          git push
+
+      - name: Trigger deployment
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          curl -X POST             -H "Authorization: token ${{ secrets.DEPLOY_HOOK_TOKEN }}"             -H "Accept: application/vnd.github.v3+json"             https://api.github.com/repos/${{ github.repository }}/dispatches             -d '{"event_type": "deploy"}'

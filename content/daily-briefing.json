@@ -1,0 +1,78 @@
+{
+  "date": "2026-06-06",
+  "summary": "Sri Lankan markets showed resilience today with the ASPI gaining 45.23 points (0.40%) to close at 11,245.67. Banking stocks led the rally with HNB and JKH posting strong gains. The S&P SL20 declined marginally by 0.36%.",
+  "marketSummary": "The Colombo Stock Exchange witnessed mixed trading with the All Share Price Index (ASPI) closing in positive territory while the S&P SL20 showed slight weakness. Total market turnover reached LKR 2.5 billion with foreign investors net buying LKR 125 million worth of equities.",
+  "keyHighlights": [
+    "ASPI gains 45.23 points to close at 11,245.67",
+    "Banking sector leads gains with HNB up 1.93%",
+    "Foreign investors net buyers for 3rd consecutive session",
+    "Dialog Axiata rises 2.40% on 5G expansion news",
+    "CBSL maintains policy rates at 8.25%",
+    "Inflation eases to 3.2% in May 2026"
+  ],
+  "topGainers": [
+    {
+      "symbol": "ACL.N0000",
+      "name": "Aitken Spence",
+      "price": 42.0,
+      "change": 1.2,
+      "changePercent": 2.94,
+      "volume": 580000,
+      "sector": "Conglomerate"
+    },
+    {
+      "symbol": "CARS.N0000",
+      "name": "Carson Cumberbatch",
+      "price": 32.5,
+      "change": 0.8,
+      "changePercent": 2.52,
+      "volume": 420000,
+      "sector": "Conglomerate"
+    },
+    {
+      "symbol": "DIAL.N0000",
+      "name": "Dialog Axiata",
+      "price": 12.8,
+      "change": 0.3,
+      "changePercent": 2.4,
+      "volume": 5200000,
+      "sector": "Telecommunication"
+    }
+  ],
+  "topLosers": [
+    {
+      "symbol": "LOFC.N0000",
+      "name": "LOLC Finance",
+      "price": 5.2,
+      "change": -0.15,
+      "changePercent": -2.8,
+      "volume": 8500000,
+      "sector": "Finance"
+    },
+    {
+      "symbol": "COMB.N0000",
+      "name": "Commercial Bank",
+      "price": 78.25,
+      "change": -1.5,
+      "changePercent": -1.88,
+      "volume": 1800000,
+      "sector": "Banking"
+    },
+    {
+      "symbol": "CTC.N0000",
+      "name": "Ceylon Tobacco",
+      "price": 890.0,
+      "change": -15.0,
+      "changePercent": -1.66,
+      "volume": 120000,
+      "sector": "Consumer"
+    }
+  ],
+  "economicUpdates": [
+    "Central Bank maintains policy rates at 8.25% citing stable inflation",
+    "May inflation drops to 3.2% from 3.6% in April",
+    "Foreign reserves increase to USD 5.8 billion",
+    "IMF review scheduled for next week"
+  ],
+  "outlook": "Market sentiment remains cautiously optimistic with banking and telecom sectors expected to continue their upward momentum. Investors should watch for the upcoming IMF review and quarterly earnings season starting next week."
+}

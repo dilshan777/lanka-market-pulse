@@ -1,0 +1,55 @@
+{
+  "indicators": [
+    {
+      "name": "Inflation Rate (YoY)",
+      "value": 3.2,
+      "unit": "%",
+      "change": -0.4,
+      "changePercent": -11.1,
+      "period": "May 2026",
+      "previousValue": 3.6,
+      "source": "CBSL"
+    },
+    {
+      "name": "Policy Interest Rate",
+      "value": 8.25,
+      "unit": "%",
+      "change": -0.25,
+      "changePercent": -2.94,
+      "period": "Jun 2026",
+      "previousValue": 8.5,
+      "source": "CBSL"
+    },
+    {
+      "name": "GDP Growth (QoQ)",
+      "value": 1.8,
+      "unit": "%",
+      "change": 0.3,
+      "changePercent": 20.0,
+      "period": "Q1 2026",
+      "previousValue": 1.5,
+      "source": "DCS"
+    },
+    {
+      "name": "Unemployment Rate",
+      "value": 4.1,
+      "unit": "%",
+      "change": -0.2,
+      "changePercent": -4.65,
+      "period": "Q1 2026",
+      "previousValue": 4.3,
+      "source": "DCS"
+    },
+    {
+      "name": "Foreign Reserves",
+      "value": 5800,
+      "unit": "USD Million",
+      "change": 120,
+      "changePercent": 2.11,
+      "period": "May 2026",
+      "previousValue": 5680,
+      "source": "CBSL"
+    }
+  ],
+  "lastUpdated": "2026-06-06T08:30:00Z"
+}

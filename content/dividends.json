@@ -1,0 +1,29 @@
+[
+  {
+    "company": "John Keells Holdings",
+    "symbol": "JKH.N0000",
+    "dividendType": "Final",
+    "amount": 3.5,
+    "exDate": "2026-06-15",
+    "recordDate": "2026-06-17",
+    "paymentDate": "2026-07-05"
+  },
+  {
+    "company": "Commercial Bank",
+    "symbol": "COMB.N0000",
+    "dividendType": "Interim",
+    "amount": 2.25,
+    "exDate": "2026-06-20",
+    "recordDate": "2026-06-22",
+    "paymentDate": "2026-07-10"
+  },
+  {
+    "company": "Hatton National Bank",
+    "symbol": "HNB.N0000",
+    "dividendType": "Final",
+    "amount": 4.0,
+    "exDate": "2026-06-25",
+    "recordDate": "2026-06-27",
+    "paymentDate": "2026-07-15"
+  }
+]

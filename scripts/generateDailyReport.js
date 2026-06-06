@@ -1,0 +1,241 @@
+const fs = require("fs");
+const path = require("path");
+
+/**
+ * Generate Daily Market Report
+ * 
+ * Aggregates market data, news, and economic indicators
+ * Generates AI-style daily briefing in Markdown format
+ * 
+ * Usage: node scripts/generateDailyReport.js
+ */
+
+const CONTENT_DIR = path.join(process.cwd(), "content");
+const REPORTS_DIR = path.join(CONTENT_DIR, "reports");
+const ARTICLES_DIR = path.join(CONTENT_DIR, "articles");
+
+function getTodayArticles() {
+  const today = new Date().toISOString().split("T")[0];
+  const articles = [];
+
+  if (!fs.existsSync(ARTICLES_DIR)) return articles;
+
+  const files = fs.readdirSync(ARTICLES_DIR).filter((f) => f.endsWith(".md"));
+
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(ARTICLES_DIR, file), "utf8");
+    const frontmatterMatch = content.match(/---\n([\s\S]*?)\n---/);
+
+    if (frontmatterMatch) {
+      const fm = frontmatterMatch[1];
+      const publishedAt = fm.match(/publishedAt: "(.*?)"/)?.[1] || "";
+
+      if (publishedAt.startsWith(today)) {
+        const title = fm.match(/title: "(.*?)"/)?.[1] || "";
+        const category = fm.match(/category: "(.*?)"/)?.[1] || "";
+        articles.push({ title, category, file });
+      }
+    }
+  }
+
+  return articles;
+}
+
+function loadMarketData() {
+  const filePath = path.join(CONTENT_DIR, "market-data.json");
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  }
+  return [];
+}
+
+function loadStocks() {
+  const filePath = path.join(CONTENT_DIR, "stocks.json");
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  }
+  return [];
+}
+
+function loadEconomicIndicators() {
+  const filePath = path.join(CONTENT_DIR, "economic-indicators.json");
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  }
+  return [];
+}
+
+function getTopGainers(stocks, limit = 5) {
+  return stocks
+    .filter((s) => s.changePercent > 0)
+    .sort((a, b) => b.changePercent - a.changePercent)
+    .slice(0, limit);
+}
+
+function getTopLosers(stocks, limit = 5) {
+  return stocks
+    .filter((s) => s.changePercent < 0)
+    .sort((a, b) => a.changePercent - b.changePercent)
+    .slice(0, limit);
+}
+
+function generateReportContent(data) {
+  const today = new Date().toISOString().split("T")[0];
+  const dayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
+
+  let content = `# Daily Market Summary - ${dayName}, ${today}
+
+## Market Overview
+
+`;
+
+  // Market indices
+  if (data.marketData.length > 0) {
+    content += "### Index Performance\n\n";
+    data.marketData.forEach((index) => {
+      const changeSign = index.change >= 0 ? "+" : "";
+      content += `- **${index.index}**: ${index.value.toFixed(2)} (${changeSign}${index.change.toFixed(2)}, ${changeSign}${index.changePercent.toFixed(2)}%)\n`;
+    });
+    content += "\n";
+  }
+
+  // Top gainers
+  if (data.gainers.length > 0) {
+    content += "### Top Gainers\n\n";
+    content += "| Symbol | Company | Price | Change | % Change |\n";
+    content += "|--------|---------|-------|--------|----------|\n";
+    data.gainers.forEach((stock) => {
+      content += `| ${stock.symbol} | ${stock.name} | ${stock.price.toFixed(2)} | +${stock.change.toFixed(2)} | +${stock.changePercent.toFixed(2)}% |\n`;
+    });
+    content += "\n";
+  }
+
+  // Top losers
+  if (data.losers.length > 0) {
+    content += "### Top Losers\n\n";
+    content += "| Symbol | Company | Price | Change | % Change |\n";
+    content += "|--------|---------|-------|--------|----------|\n";
+    data.losers.forEach((stock) => {
+      content += `| ${stock.symbol} | ${stock.name} | ${stock.price.toFixed(2)} | ${stock.change.toFixed(2)} | ${stock.changePercent.toFixed(2)}% |\n`;
+    });
+    content += "\n";
+  }
+
+  // Economic indicators
+  if (data.economicIndicators.length > 0) {
+    content += "### Economic Highlights\n\n";
+    data.economicIndicators.slice(0, 3).forEach((indicator) => {
+      const changeSign = indicator.change >= 0 ? "+" : "";
+      content += `- **${indicator.name}**: ${indicator.value}${indicator.unit} (${changeSign}${indicator.changePercent.toFixed(1)}%)\n`;
+    });
+    content += "\n";
+  }
+
+  // Today's news
+  if (data.todayArticles.length > 0) {
+    content += "### Today's Key News\n\n";
+    data.todayArticles.slice(0, 5).forEach((article) => {
+      content += `- [${article.category.toUpperCase()}] ${article.title}\n`;
+    });
+    content += "\n";
+  }
+
+  // Market outlook
+  content += `## Market Outlook
+
+Based on today's trading activity and economic data, market sentiment remains 
+${data.gainers.length > data.losers.length ? "positive" : "mixed"}. 
+
+Key factors to watch:
+- ${data.economicIndicators.length > 0 ? data.economicIndicators[0].name + " trends" : "Economic data releases"}
+- Foreign investor activity
+- Upcoming corporate earnings
+- Global market conditions
+
+---
+
+*Report generated by Lanka Market Pulse on ${new Date().toLocaleString()}*  
+*This report is for informational purposes only. Not investment advice.*
+`;
+
+  return content;
+}
+
+function generateFrontmatter(data) {
+  const today = new Date().toISOString().split("T")[0];
+  return `---
+title: "Daily Market Summary - ${today}"
+type: "daily"
+date: "${today}"
+summary: "${data.marketData.length > 0 
+    ? `ASPI ${data.marketData[0].change >= 0 ? "gains" : "loses"} ${Math.abs(data.marketData[0].change).toFixed(2)} points. ${data.gainers.length} gainers, ${data.losers.length} losers.` 
+    : "Market summary for today."}"
+---`;
+}
+
+async function main() {
+  console.log("=== Generating Daily Market Report ===");
+
+  if (!fs.existsSync(REPORTS_DIR)) {
+    fs.mkdirSync(REPORTS_DIR, { recursive: true });
+  }
+
+  // Collect data
+  const todayArticles = getTodayArticles();
+  const marketData = loadMarketData();
+  const stocks = loadStocks();
+  const economicIndicators = loadEconomicIndicators();
+  const gainers = getTopGainers(stocks);
+  const losers = getTopLosers(stocks);
+
+  console.log(`Found ${todayArticles.length} articles today`);
+  console.log(`Market indices: ${marketData.length}`);
+  console.log(`Stocks: ${stocks.length}`);
+  console.log(`Gainers: ${gainers.length}, Losers: ${losers.length}`);
+
+  // Generate report
+  const reportData = {
+    todayArticles,
+    marketData,
+    stocks,
+    economicIndicators,
+    gainers,
+    losers,
+  };
+
+  const frontmatter = generateFrontmatter(reportData);
+  const content = generateReportContent(reportData);
+  const fullReport = `${frontmatter}\n\n${content}`;
+
+  // Save report
+  const today = new Date().toISOString().split("T")[0];
+  const fileName = `daily-market-summary-${today}.md`;
+  const filePath = path.join(REPORTS_DIR, fileName);
+
+  fs.writeFileSync(filePath, fullReport);
+  console.log(`\nReport saved: ${filePath}`);
+
+  // Also update daily-briefing.json
+  const briefingPath = path.join(CONTENT_DIR, "daily-briefing.json");
+  const briefing = {
+    date: today,
+    summary: reportData.marketData.length > 0
+      ? `ASPI ${reportData.marketData[0].change >= 0 ? "gained" : "lost"} ${Math.abs(reportData.marketData[0].change).toFixed(2)} points today.`
+      : "Market summary generated.",
+    marketSummary: "See full report for details.",
+    keyHighlights: todayArticles.slice(0, 6).map((a) => a.title),
+    topGainers: gainers,
+    topLosers: losers,
+    economicUpdates: economicIndicators.slice(0, 4).map((e) => `${e.name}: ${e.value}${e.unit}`),
+    outlook: "See full report for market outlook.",
+  };
+
+  fs.writeFileSync(briefingPath, JSON.stringify(briefing, null, 2));
+  console.log(`Briefing updated: ${briefingPath}`);
+}
+
+if (require.main === module) {
+  main().catch(console.error);
+}
+
+module.exports = { main, generateReportContent, getTodayArticles };
