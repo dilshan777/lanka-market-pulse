@@ -55,7 +55,11 @@ export function SearchComponent({ articles }: SearchComponentProps) {
     [articles]
   );
 
-  const debouncedSearch = useCallback(debounce(searchArticles, 300), [searchArticles]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+const debouncedSearch = useCallback(
+  debounce((q: string) => searchArticles(q), 300),
+  [searchArticles]
+);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

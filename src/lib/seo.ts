@@ -91,9 +91,9 @@ export function buildPageMetadata({
       googleBot: {
         index: !noIndex,
         follow: !noIndex,
-        maxSnippet: -1,
-        maxImagePreview: "large",
-        maxVideoPreview: -1,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
       },
     },
     verification: {
@@ -104,6 +104,7 @@ export function buildPageMetadata({
   if (type === "article" && publishedTime) {
     metadata.openGraph = {
       ...metadata.openGraph,
+      type: "article",
       publishedTime,
       modifiedTime: modifiedTime || publishedTime,
       authors: authors || ["Lanka Market Pulse"],

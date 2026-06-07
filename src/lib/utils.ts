@@ -91,7 +91,7 @@ export function getRelativeTime(dateString: string): string {
   return formatDate(dateString);
 }
 
-export function debounce<T extends (...args: unknown[]) => void>(
+export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {

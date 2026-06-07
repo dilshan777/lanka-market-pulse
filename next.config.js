@@ -6,11 +6,19 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Disable image optimization for static export
-  // Images must be served from public/ or external CDN
   compress: true,
-  // Generate static params for all dynamic routes
   generateBuildId: () => 'lanka-market-pulse-' + Date.now(),
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        os: false,
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;

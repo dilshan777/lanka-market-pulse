@@ -24,7 +24,7 @@ export function Header({ marketData }: HeaderProps) {
               <div key={`${data.index}-${i}`} className="flex items-center gap-2 whitespace-nowrap">
                 <span className="font-semibold text-lanka-text-primary">{data.index}</span>
                 <span className="text-lanka-text-secondary">{formatNumber(data.value, 2)}</span>
-                <span className={getMarketColor(data.change)} className="flex items-center gap-0.5">
+                <span className={`${getMarketColor(data.change)} flex items-center gap-0.5`}>
                   {data.change > 0 ? <TrendingUp className="w-3 h-3" /> : data.change < 0 ? <TrendingDown className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
                   {formatPercent(data.changePercent)}
                 </span>

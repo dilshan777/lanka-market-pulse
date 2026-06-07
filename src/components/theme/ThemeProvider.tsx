@@ -9,7 +9,11 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+// Provide a default value so useTheme never throws during SSR prerendering
+const ThemeContext = createContext<ThemeContextType>({
+  theme: "dark",
+  toggleTheme: () => {},
+});
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
@@ -35,10 +39,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  if (!mounted) {
-    return <div className="bg-background min-h-screen">{children}</div>;
-  }
-
+  // Always wrap in provider — never return children without context
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
@@ -47,7 +48,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error("useTheme must be used within ThemeProvider");
-  return context;
+  return useContext(ThemeContext);
 }

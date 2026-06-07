@@ -5,6 +5,9 @@ import { remark } from "remark";
 import html from "remark-html";
 import { Article, MarketData, Stock, Dividend, EconomicIndicator, ExchangeRate, DailyBriefing, Report } from "@/types";
 
+// Mark all functions as server-only (fixes "Can't resolve fs" error)
+// This file must only be imported from Server Components or API routes
+
 const contentDirectory = path.join(process.cwd(), "content");
 
 // Load all articles
@@ -41,7 +44,9 @@ export function getAllArticles(): Article[] {
     } as Article;
   });
 
-  return articles.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  return articles.sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 }
 
 // Load single article
@@ -56,38 +61,54 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return article;
 }
 
-// Get articles by category
 export function getArticlesByCategory(category: string): Article[] {
   return getAllArticles().filter((a) => a.category === category);
 }
 
-// Get featured articles
 export function getFeaturedArticles(limit = 5): Article[] {
   return getAllArticles().filter((a) => a.featured).slice(0, limit);
 }
 
-// Get breaking news
 export function getBreakingNews(): Article[] {
   return getAllArticles().filter((a) => a.breaking);
 }
 
-// Get latest articles
 export function getLatestArticles(limit = 10): Article[] {
   return getAllArticles().slice(0, limit);
 }
 
-// Load market data from JSON
-export function getMarketData(): MarketData[] {
-  const filePath = path.join(contentDirectory, "market-data.json");
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+// Load market data
+function loadJSON<T>(filename: string, fallback: T): T {
+  const filePath = path.join(contentDirectory, filename);
+  if (!fs.existsSync(filePath)) return fallback;
+  try {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch {
+    return fallback;
+  }
 }
 
-// Load stocks
+export function getMarketData(): MarketData[] {
+  return loadJSON<MarketData[]>("market-data.json", []);
+}
+
 export function getStocks(): Stock[] {
-  const filePath = path.join(contentDirectory, "stocks.json");
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  // Try both possible file locations
+  const filePath1 = path.join(contentDirectory, "stocks.json");
+  const filePath2 = path.join(contentDirectory, "data", "market.json");
+
+  if (fs.existsSync(filePath1)) {
+    try {
+      return JSON.parse(fs.readFileSync(filePath1, "utf8"));
+    } catch { return []; }
+  }
+  if (fs.existsSync(filePath2)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath2, "utf8"));
+      return data.stocks || [];
+    } catch { return []; }
+  }
+  return [];
 }
 
 export function getTopGainers(limit = 10): Stock[] {
@@ -104,59 +125,81 @@ export function getTopLosers(limit = 10): Stock[] {
     .slice(0, limit);
 }
 
-// Load dividends
 export function getDividends(): Dividend[] {
-  const filePath = path.join(contentDirectory, "dividends.json");
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return loadJSON<Dividend[]>("dividends.json", []);
 }
 
-// Load economic indicators
 export function getEconomicIndicators(): EconomicIndicator[] {
-  const filePath = path.join(contentDirectory, "economic-indicators.json");
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  const filePath1 = path.join(contentDirectory, "economic-indicators.json");
+  const filePath2 = path.join(contentDirectory, "data", "economic.json");
+
+  if (fs.existsSync(filePath1)) {
+    try {
+      return JSON.parse(fs.readFileSync(filePath1, "utf8"));
+    } catch { return []; }
+  }
+  if (fs.existsSync(filePath2)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath2, "utf8"));
+      return data.indicators || [];
+    } catch { return []; }
+  }
+  return [];
 }
 
-// Load exchange rates
 export function getExchangeRates(): ExchangeRate[] {
-  const filePath = path.join(contentDirectory, "exchange-rates.json");
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  const filePath1 = path.join(contentDirectory, "exchange-rates.json");
+  const filePath2 = path.join(contentDirectory, "data", "economic.json");
+
+  if (fs.existsSync(filePath1)) {
+    try {
+      return JSON.parse(fs.readFileSync(filePath1, "utf8"));
+    } catch { return []; }
+  }
+  if (fs.existsSync(filePath2)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath2, "utf8"));
+      return data.exchangeRates || [];
+    } catch { return []; }
+  }
+  return [];
 }
 
-// Load daily briefing
 export function getDailyBriefing(): DailyBriefing | null {
   const filePath = path.join(contentDirectory, "daily-briefing.json");
   if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  try {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch {
+    return null;
+  }
 }
 
-// Load reports
 export function getReports(): Report[] {
   const reportsDir = path.join(contentDirectory, "reports");
   if (!fs.existsSync(reportsDir)) return [];
 
   const files = fs.readdirSync(reportsDir).filter((f) => f.endsWith(".md"));
 
-  return files.map((filename) => {
-    const id = filename.replace(/\.md$/, "");
-    const filePath = path.join(reportsDir, filename);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data, content } = matter(fileContents);
+  return files
+    .map((filename) => {
+      const id = filename.replace(/\.md$/, "");
+      const filePath = path.join(reportsDir, filename);
+      const fileContents = fs.readFileSync(filePath, "utf8");
+      const { data, content } = matter(fileContents);
 
-    return {
-      id,
-      title: data.title || "",
-      type: data.type || "daily",
-      date: data.date || new Date().toISOString(),
-      summary: data.summary || "",
-      content,
-    } as Report;
-  }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      return {
+        id,
+        title: data.title || "",
+        type: data.type || "daily",
+        date: data.date || new Date().toISOString(),
+        summary: data.summary || "",
+        content,
+      } as Report;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-// Get all unique categories
 export function getCategories(): { slug: string; name: string; count: number }[] {
   const articles = getAllArticles();
   const categoryMap = new Map<string, number>();
@@ -168,14 +211,14 @@ export function getCategories(): { slug: string; name: string; count: number }[]
 
   const categoryNames: Record<string, string> = {
     "stock-market": "Stock Market",
-    "business": "Business",
-    "economic": "Economic",
-    "dividend": "Dividend",
-    "earnings": "Earnings",
-    "banking": "Banking",
-    "tourism": "Tourism",
-    "technology": "Technology",
-    "general": "General",
+    business: "Business",
+    economic: "Economic",
+    dividend: "Dividend",
+    earnings: "Earnings",
+    banking: "Banking",
+    tourism: "Tourism",
+    technology: "Technology",
+    general: "General",
   };
 
   return Array.from(categoryMap.entries()).map(([slug, count]) => ({
@@ -185,7 +228,6 @@ export function getCategories(): { slug: string; name: string; count: number }[]
   }));
 }
 
-// Get all tags
 export function getAllTags(): { name: string; count: number }[] {
   const articles = getAllArticles();
   const tagMap = new Map<string, number>();
