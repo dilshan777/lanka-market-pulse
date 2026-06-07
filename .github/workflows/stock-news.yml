@@ -1,12 +1,12 @@
-name: Daily Market Report
+name: Fetch Stock Market News
 
 on:
   schedule:
-    - cron: '30 9 * * 1-5'  # 3:00 PM SL time (UTC 9:30)
+    - cron: '*/15 4-9 * * 1-5'  # Every 15 min, 9:30AM-2:30PM SL time
   workflow_dispatch:
 
 jobs:
-  generate-report:
+  fetch-stock-news:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,16 +24,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate daily report
-        run: node scripts/generateDailyReport.js
+      - name: Fetch stock market news
+        run: node scripts/fetchStockNews.js
         env:
           NODE_ENV: production
 
-      - name: Commit and push report
+      - name: Commit and push new articles
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
           git pull --rebase origin main
-          git add content/reports/ content/daily-briefing.json
-          git diff --staged --quiet || git commit -m "auto: daily report $(date +'%Y-%m-%d')"
+          git add content/articles/ content/data/
+          git diff --staged --quiet || git commit -m "auto: stock news $(date +'%Y-%m-%d %H:%M')"
           git push
