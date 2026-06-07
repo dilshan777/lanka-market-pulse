@@ -1,15 +1,9 @@
-name: Fetch Economic News & Data
+name: Fetch Economic News
 
 on:
   schedule:
-    # Run every hour
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # Every hour
   workflow_dispatch:
-    inputs:
-      manual_trigger:
-        description: 'Manually trigger economic news fetch'
-        required: false
-        default: 'true'
 
 jobs:
   fetch-economic-news:
@@ -18,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,32 +22,18 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Fetch economic news and data
+      - name: Fetch economic news
         run: node scripts/fetchEconomicNews.js
         env:
           NODE_ENV: production
 
-      - name: Check for changes
-        id: check_changes
-        run: |
-          if git diff --quiet HEAD -- content/; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Commit and push updates
-        if: steps.check_changes.outputs.changed == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add content/
-          git commit -m "[AUTO] Economic news & data update - $(date +'%Y-%m-%d %H:%M')"
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git pull --rebase origin main
+          git add content/articles/ content/data/
+          git diff --staged --quiet || git commit -m "auto: economic data $(date +'%Y-%m-%d %H:%M')"
           git push
-
-      - name: Trigger deployment
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          curl -X POST             -H "Authorization: token ${{ secrets.DEPLOY_HOOK_TOKEN }}"             -H "Accept: application/vnd.github.v3+json"             https://api.github.com/repos/${{ github.repository }}/dispatches             -d '{"event_type": "deploy"}'

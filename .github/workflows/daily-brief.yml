@@ -1,23 +1,19 @@
-name: Generate Daily Market Briefing
+name: Daily Market Report
 
 on:
   schedule:
-    # Run daily at 3:00 PM SL time = 9:30 UTC
-    - cron: '30 9 * * 1-5'
+    - cron: '30 9 * * 1-5'  # 3:00 PM SL time (UTC 9:30)
   workflow_dispatch:
-    inputs:
-      manual_trigger:
-        description: 'Manually trigger daily briefing generation'
-        required: false
-        default: 'true'
 
 jobs:
-  generate-daily-brief:
+  generate-report:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,39 +22,18 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Generate daily report
         run: node scripts/generateDailyReport.js
         env:
           NODE_ENV: production
 
-      - name: Check for changes
-        id: check_changes
+      - name: Commit and push report
         run: |
-          if git diff --quiet HEAD -- content/; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit and push daily report
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add content/
-          git commit -m "[AUTO] Daily market briefing - $(date +'%Y-%m-%d')"
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git pull --rebase origin main
+          git add content/reports/ content/daily-briefing.json
+          git diff --staged --quiet || git commit -m "auto: daily report $(date +'%Y-%m-%d')"
           git push
-
-      - name: Trigger deployment
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          curl -X POST             -H "Authorization: token ${{ secrets.DEPLOY_HOOK_TOKEN }}"             -H "Accept: application/vnd.github.v3+json"             https://api.github.com/repos/${{ github.repository }}/dispatches             -d '{"event_type": "deploy"}'
-
-      - name: Send newsletter notification
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          echo "Newsletter notification would be sent here"
-          # In production, integrate with SendGrid/Mailgun API
-          # curl -X POST https://api.sendgrid.com/v3/mail/send           #   -H "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}"           #   -H "Content-Type: application/json"           #   -d '{"personalizations":[{"to":[{"email":"subscribers@lankamarketpulse.com"}]}],"from":{"email":"noreply@lankamarketpulse.com"},"subject":"Daily Market Briefing - $(date +%Y-%m-%d)","content":[{"type":"text/plain","value":"Your daily briefing is ready. Visit https://lankamarketpulse.com/daily-reports/"}]}'
