@@ -3,7 +3,8 @@ name: Fetch Business News
 on:
   schedule:
     #- cron: '*/30 4-9 * * 1-5'  # Every 30 min during market hours
-     - cron: '0 */2 4-9 * * 1-5'  # Every 2 hours during market hours
+    #- cron: '0 */2 4-9 * * 1-5'  # Every 2 hours during market hours
+    - cron: '30 4,6,8 * * 1-5'  # 4:30am, 6:30am, 8:30am UTC
   workflow_dispatch:
 
 jobs:
